@@ -64,7 +64,7 @@ spec:
                     NAMESPACE="myapp-test"
                     GIT_URL="https://github.com/dbha/myapp-test.git"
                     CLUSTER_BUILDER="default"
-                    BRANCH_NAME="master"
+                    BRANCH_NAME="main"
                     IMAGE_TAG="harbor.shared.lab.pksdemo.net/tanzu/apps/myapp-test"
                 }
             }
@@ -136,7 +136,7 @@ spec:
                         mkdir -p ~/.ssh
                         git diff-index --quiet HEAD || git commit -m "Update by CI"
                         ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
-                        git pull -r origin master
+                        git pull -r origin main
                         pwd;ls -alrt
                         git push --set-upstream origin main
                         '''
@@ -150,7 +150,6 @@ spec:
                 container('k8s'){
                   dir("gitops"){
                     sh '''#!/bin/sh -e
-                    sleep 100000
                     cd app
                     export KUBECONFIG=/tmp/devConfig/dev-cluster-kubeconfig-sa
                     kubectl apply -k ./"${APP_NAME}" -n "${NAMESPACE}"
