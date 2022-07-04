@@ -150,6 +150,7 @@ spec:
                 container('k8s'){
                   dir("gitops"){
                     sh '''#!/bin/sh -e
+                    sleep 100000
                     cd app
                     export KUBECONFIG=/tmp/devConfig/dev-cluster-kubeconfig-sa
                     kubectl apply -k ./"${APP_NAME}" -n "${NAMESPACE}"
