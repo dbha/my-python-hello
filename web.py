@@ -9,11 +9,11 @@ app.logger.setLevel(logging.INFO)
 @app.route("/")
 def hello_world():
     app.logger.info("default path")
-    return "Hello, python demo!!"
+    return "Hello, python Demo Test!!"
 
 
 @app.route("/hello/<username>")
 def hello_user(username):
     # say hello to that user
     app.logger.info("/hello path. User: " + username)
-    return "Hello python Demo %s" % escape(username)
+    return "Hello python Demo Test %s" % escape(username)
