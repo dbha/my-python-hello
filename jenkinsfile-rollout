@@ -5,7 +5,7 @@ properties ([
 		string(name: 'GIT_URL', defaultValue: 'https://github.com/dbha/my-python-hello.git', description: '', trim: true),
         string(name: 'CLUSTER_BUILDER', defaultValue: 'default', description: '', trim: true),
         string(name: 'BRANCH_NAME', defaultValue: 'main', description: '', trim: true),
-		string(name: 'IMAGE_TAG', defaultValue: 'harbor.shared.lab.pksdemo.net/tanzu/apps/python-rollout-demo', description: '', trim: true),
+		string(name: 'IMAGE_TAG', defaultValue: 'harbor.shared.lab.pksdemo.net/tanzu/apps/python-demo-rollout', description: '', trim: true),
 	])
 ])
 
