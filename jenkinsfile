@@ -124,7 +124,8 @@ spec:
                         export VERSION=$(cat version.txt)
                         kubectl get po -A
                         pwd
-                        cd gitops/app/"${APP_NAME}"
+                        # cd gitops/app/"${APP_NAME}"
+                        cd gitops/app/"${APP_NAME}/rollout"
                         pwd
                         
                         kustomize edit set image "${APP_NAME}"=${VERSION}
@@ -152,7 +153,8 @@ spec:
                     sh '''#!/bin/sh -e
                     cd app
                     export KUBECONFIG=/tmp/devConfig/dev-cluster-kubeconfig-sa
-                    kubectl apply -k ./"${APP_NAME}" -n "${NAMESPACE}"
+                    # kubectl apply -k ./"${APP_NAME}" -n "${NAMESPACE}"
+                    kubectl apply -k ./"${APP_NAME}/rollout" -n "${NAMESPACE}"
                     '''
                   }
                 }
