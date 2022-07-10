@@ -1,11 +1,11 @@
 properties ([
 	parameters ([
-		string(name: 'APP_NAME', defaultValue: 'python-demo', description: '', trim: true),
+		string(name: 'APP_NAME', defaultValue: 'python-demo-rollout', description: '', trim: true),
 		string(name: 'NAMESPACE', defaultValue: 'myapp-test', description: '', trim: true),
 		string(name: 'GIT_URL', defaultValue: 'https://github.com/dbha/my-python-hello.git', description: '', trim: true),
         string(name: 'CLUSTER_BUILDER', defaultValue: 'default', description: '', trim: true),
         string(name: 'BRANCH_NAME', defaultValue: 'main', description: '', trim: true),
-		string(name: 'IMAGE_TAG', defaultValue: 'harbor.shared.lab.pksdemo.net/tanzu/apps/python-demo', description: '', trim: true),
+		string(name: 'IMAGE_TAG', defaultValue: 'harbor.shared.lab.pksdemo.net/tanzu/apps/python-rollout-demo', description: '', trim: true),
 	])
 ])
 
@@ -114,7 +114,7 @@ spec:
                             changelog: false,
                             branch: "${BRANCH_NAME}",
                             credentialsId: "jenkins-ssh-private-key",
-                            url: "git@github.com:dbha/python-demo-gitops.git"
+                            url: "git@github.com:dbha/python-demo-rollout-gitops.git"
                         )
                     }
                     sshagent(credentials: ['jenkins-ssh-private-key']){
@@ -131,7 +131,9 @@ spec:
                         export GIT_SSH_COMMAND="ssh -oStrictHostKeyChecking=no"
                         git config --global user.name "dbha"
                         git config --global user.email "dbha0719@gmail.com"
-                        git config --global --add safe.directory /home/jenkins/agent/workspace/python-demo/gitops
+                        
+                        git config --global --add safe.directory /home/jenkins/agent/workspace/python-demo-rollout/gitops
+
                         git add .
                         mkdir -p ~/.ssh
                         git diff-index --quiet HEAD || git commit -m "Update by CI"
@@ -141,20 +143,6 @@ spec:
                         git push --set-upstream origin main
                         '''
                     }
-                }
-            }
-        }
-
-        stage('Deploy Service to Cluster') {
-            steps {
-                container('k8s'){
-                  dir("gitops"){
-                    sh '''#!/bin/sh -e
-                    cd app
-                    export KUBECONFIG=/tmp/devConfig/dev-cluster-kubeconfig-sa
-                    kubectl apply -k ./"${APP_NAME}" -n "${NAMESPACE}"
-                    '''
-                  }
                 }
             }
         }
