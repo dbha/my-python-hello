@@ -120,6 +120,8 @@ spec:
                     sshagent(credentials: ['jenkins-ssh-private-key']){
                         sh '''#!/bin/sh -e
                         echo "sshagent"
+                        export JOB_BASE_NAME=${env.JOB_BASE_NAME}
+                        echo ${JOB_BASE_NAME}
                         kubectl get image "${APP_NAME}" -n "${NAMESPACE}" -o json | jq -r .status.latestImage >> version.txt
                         export VERSION=$(cat version.txt)
                         kubectl get po -A
@@ -131,7 +133,7 @@ spec:
                         export GIT_SSH_COMMAND="ssh -oStrictHostKeyChecking=no"
                         git config --global user.name "dbha"
                         git config --global user.email "dbha0719@gmail.com"
-                        git config --global --add safe.directory /home/jenkins/agent/workspace/${APP_NAME}/gitops
+                        git config --global --add safe.directory /home/jenkins/agent/workspace/${JOB_BASE_NAME}/gitops
                         git add .
                         mkdir -p ~/.ssh
                         git diff-index --quiet HEAD || git commit -m "Update by CI"
