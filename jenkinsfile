@@ -1,7 +1,7 @@
 properties ([
 	parameters ([
 		string(name: 'APP_NAME', defaultValue: 'python-demo', description: '', trim: true),
-		string(name: 'NAMESPACE', defaultValue: 'myapp-test', description: '', trim: true),
+		string(name: 'NAMESPACE', defaultValue: 'demo', description: '', trim: true),
 		string(name: 'GIT_URL', defaultValue: 'https://github.com/dbha/my-python-hello.git', description: '', trim: true),
         string(name: 'CLUSTER_BUILDER', defaultValue: 'default', description: '', trim: true),
         string(name: 'BRANCH_NAME', defaultValue: 'main', description: '', trim: true),
